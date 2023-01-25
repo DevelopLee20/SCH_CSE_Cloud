@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load test_cloud_filter %}
+{% block content %}
+<div class="container my-3">
+    <h2 class="border-bottom py-2">{{ content.title }}</h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text">{{content.summary|mark}}</div>
+            <div class="card-text" style="white-space: pre-line;">
+                {% if content.file.value.length != 0 %}
+                <a href="../../media/{{content.file}}" download="{{content.title}}">{{content.title}} 다운로드</a>
+                {% else %}
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-end">
+                {% if content.modify_date %}
+                <div class="badge badge-light p-2 text-left">
+                    <div class="mb-2">수정됨</div>
+                    <div>{{ content.modify_date }}</div>
+                </div>
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="badge badge-light p-2 text-left">
+                    <div class="mb-2">{{content.author.username}}</div>
+                    <div>{{ content.create_date }}</div>
+                </div>
+            </div>
+            {% if request.user == content.author %}
+            <div class="my-3">
+                <a href="{% url 'test_cloud:content_modify' content.id %}" class="btn btn-sm btn-outline-secondary">
+                    수정
+                </a>
+                <a href="#" class="delete btn btn-sm btn-outline-secondary" data-uri="{% url 'test_cloud:content_delete' content.id %}">
+                    삭제
+                </a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+<script type='text/javascript'>
+$(document).ready(function(){
+    $(".delete").on('click', function() {
+        if(confirm("정말로 삭제하시겠습니까?")) {
+            location.href = $(this).data('uri');
+        }
+    });
+});
+</script>
+{% endblock %}
