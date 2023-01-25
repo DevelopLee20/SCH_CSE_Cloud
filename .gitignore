@@ -1,4 +1,5 @@
-Cloud
+Cloud/settings.py
+read_secret_key.py
 *.log
 *.pot
 *.pyc
