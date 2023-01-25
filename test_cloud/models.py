@@ -13,3 +13,8 @@ class Content(models.Model):
     def __str__(self):
         text = str(self.create_date)[:10]
         return f'{text} {self.title}'
+
+class new_Content(models.Model):
+    file = models.FileField(upload_to=file_edit_name)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    create_date = models.DateTimeField()

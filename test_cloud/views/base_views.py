@@ -11,6 +11,7 @@ def index_filter(request):
 
     # 검색 필터링
     kw = request.GET.get('kw','') # 검색어
+    print(kw)
     if kw:
         content_list = content_list.filter(
             Q(title__icontains=kw) |
@@ -23,11 +24,24 @@ def index_filter(request):
 
     return context
 
+# # 메인 화면
+# @login_required(login_url = 'common:login')
+# def index(request):
+#     page_obj, page, kw = index_filter(request)
+#     context = index_filter(request)
+#     return render(request, 'test_cloud/content_list.html', context)
+
 # 메인 화면
 @login_required(login_url = 'common:login')
 def index(request):
-    page_obj, page, kw = index_filter(request)
-    context = index_filter(request)
+    # 이름으로 필터링
+    content_list = Content.objects.order_by('-create_date')
+    page = request.GET.get('page', '1')
+    content_list = content_list.filter(Q(author__username__icontains = request.user))
+    paginator = Paginator(content_list, 10)
+    page_obj = paginator.get_page(page)
+    context = {'content_list':page_obj, 'page':page, 'kw':request.user}
+
     return render(request, 'test_cloud/content_list.html', context)
 
 # 게시글 클릭시 화면

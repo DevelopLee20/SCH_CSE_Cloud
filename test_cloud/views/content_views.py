@@ -49,10 +49,11 @@ def content_create(request):
         if form.is_valid():
             content = form.save(commit=False)
             content.create_date = timezone.now()
+            content.file = request.FILES['file']
             content.author = request.user
             content.save()
 
-            return redirect('test_cloud:index')
+        return redirect('test_cloud:index')
         
     else:
         form = ContentForm()
