@@ -17,11 +17,6 @@
         {% endif %}
         <!-- 오류표시 End -->
         <div class="form-group">
-            <label for="title">제목</label>
-            <input type="text" class="form-control" name="title" id="title"
-                   value="{{ form.title.value|default_if_none:'' }}">
-        </div>
-        <div class="form-group">
             <label for="file">파일</label>
             <input type="file" class="form-control" name="file" id="file" rows="10">
         </div>

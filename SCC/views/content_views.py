@@ -19,13 +19,13 @@ def content_delete(request, content_id):
 
     return redirect('SCC:index')
 
-# 게시글 만들기
+# 게시글 만들기, 파일 업로드
 @login_required(login_url = 'common:login')
 def content_create(request):
     if request.method == 'POST':
         form = Content()
         file = request.FILES['file']
-        form.title = request.POST['title']
+        form.title = file
         form.create_date = timezone.now()
         form.author = request.user
         form.file = file
@@ -35,6 +35,7 @@ def content_create(request):
 
     return render(request, 'SCC/content_form.html')
 
+# 파일 다운로드
 def file_download(request):
     path = request.GET['path']
     file_path = os.path.join(settings.MEDIA_ROOT, path)
