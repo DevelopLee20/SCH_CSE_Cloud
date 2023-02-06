@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django import forms
 
 class UserForm(UserCreationForm):
-    email = forms.EmailField(label="이메일")
+    student_number = forms.IntegerField(label="학번")
 
     class Meta:
         model = User
-        fields = ("username", "email")
+        fields = ("username", "student_number")

@@ -7,6 +7,7 @@ app_name = 'SCC'
 urlpatterns = [
     # base_views.py
     path('', base_views.index, name='index'),
+    # localhost:8000/SCC/download -> 함수 실행
     path('download/', content_views.file_download, name='file_download'),
 
     # content_views.py

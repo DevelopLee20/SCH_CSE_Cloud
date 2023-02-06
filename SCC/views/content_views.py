@@ -5,9 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import os
 from django.conf import settings
-from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
-from django.conf import settings
 from django.http import HttpResponse
 import random
 
@@ -15,6 +13,14 @@ import random
 @login_required(login_url='common:login')
 def content_delete(request, content_id):
     content = get_object_or_404(Content, pk=content_id)
+
+    try:
+        if content.file:
+            os.remove(os.path.join(settings.MEDIA_ROOT, content.file.path))
+    except:
+        print(os.path.join(settings.MEDIA_ROOT, content.file.path))
+        print('no file!')
+    
     content.delete()
 
     return redirect('SCC:index')
