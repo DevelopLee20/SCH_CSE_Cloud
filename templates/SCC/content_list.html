@@ -19,7 +19,7 @@
                 {{ content_list.paginator.count|sub:content_list.start_index|sub:forloop.counter0|add:1 }}
             </td>
             <td>
-                <a href="download?path={{content.file}}" target="_self" download="{{content.title}}">
+                <a href="download?path={{content.file}}" target="_self">
                     {{content.title}}
                 </a>
             </td>

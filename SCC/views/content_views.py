@@ -29,13 +29,13 @@ def content_delete(request, content_id):
 @login_required(login_url = 'common:login')
 def content_create(request):
     if request.method == 'POST':
-        form = Content()
-        file = request.FILES['file']
-        form.title = file
-        form.create_date = timezone.now()
-        form.author = request.user
-        form.file = file
-        form.save()
+        for file in request.FILES.getlist('file'):
+            form = Content()
+            form.title = file
+            form.create_date = timezone.now()
+            form.author = request.user
+            form.file = file
+            form.save()
 
         return redirect('SCC:index')
 
